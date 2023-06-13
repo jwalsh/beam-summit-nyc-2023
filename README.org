@@ -123,11 +123,23 @@
 
 *** Generative Art
 
-
 #+begin_ai :image :size 256x256
-Use a hawaiian pop art theme showing corporate offices
+Juan Gris art of Apache Beam conference in NYC (mixed media: newspaper, histograms, flame graph  in oil)
 #+end_ai
-[[file:/Users/jasonwalsh/org/org-ai-images/20230613_256x256_image.png]]
+[[file:images/20230613_256x256_image_13.png]]
+[[file:images/20230613_256x256_image_12.png]]
+[[file:images/20230613_256x256_image_11.png]]
+[[file:images/20230613_256x256_image_10.png]]
+[[file:images/20230613_256x256_image_9.png]]
+[[file:images/20230613_256x256_image_8.png]]
+[[file:images/20230613_256x256_image_7.png]]
+[[file:images/20230613_256x256_image_6.png]]
+[[file:images/20230613_256x256_image_5.png]]
+[[file:images/20230613_256x256_image_4.png]]
+[[file:images/20230613_256x256_image_3.png]]
+[[file:images/20230613_256x256_image_2.png]]
+[[file:images/20230613_256x256_image_1.png]]
+[[file:images/20230613_256x256_image.png]]
 
 
 ** [#C] Multi-language pipelines: a unique Beam feature that will make your team more efficient by Chamikara Jayalath
@@ -153,6 +165,8 @@ Use a hawaiian pop art theme showing corporate offices
 - Metrics > CPU utilization
 - Data freshness
 - Batch > Execution Details > straggler detection (reshuffle)
+- GC thrashing 
+- machine types, decrease parallelism, or dataflow prime
 
 ** [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
