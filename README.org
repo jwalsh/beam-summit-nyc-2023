@@ -1,5 +1,7 @@
 * Beam Summit 2023
 
+- https://beamsummit.org/program/
+
 ** Tue, 13 Jun
 
 - 09:00 AM - 09:15 AM: Welcome by Danielle Syse
@@ -79,10 +81,15 @@
 * Actions 
 
 - https://www.cloudskillsboost.google/catalog?qlcampaign=1h-opensource-27
+- https://www.tensorflow.org/hub/tutorials
+
+** [#A] Beam Examples 
+
+- https://github.com/apache/beam/tree/master/sdks/python/apache_beam/examples
 
 * Session Notes 
 
-** How to Fail with Real-time Analytics by Matthew Housley
+** [#C] How to Fail with Real-time Analytics by Matthew Housley
 
 - https://beamsummit.org/sessions/2023/how-to-fail-realtime-analytics/
 
@@ -91,7 +98,7 @@
 - Kubernetes cluster 
 - SLA/SLO/SLI
 
-** Beam ML past, present and future by Kerry Donny-Clark & Reza Rokni
+** DONE [#B] Beam ML past, present and future by Kerry Donny-Clark & Reza Rokni
 
 #+begin_src python
   with beam.Ppeline as p:
@@ -112,15 +119,28 @@
 
 - https://www.tensorflow.org/hub
 
+- https://colab.research.google.com/github/apache/beam/blob/master/examples/notebooks/beam-ml/run_inference_with_tensorflow_hub.ipynb
 
-** Troubleshooting Slow Running Beam Pipelines by Mehak Gupta
+*** Generative Art
+
+
+#+begin_ai :image :size 256x256
+Use a hawaiian pop art theme showing corporate offices
+#+end_ai
+[[file:/Users/jasonwalsh/org/org-ai-images/20230613_256x256_image.png]]
+
+
+** [#C] Multi-language pipelines: a unique Beam feature that will make your team more efficient by Chamikara Jayalath
+** [#B] Troubleshooting Slow Running Beam Pipelines by Mehak Gupta
 
 - https://beamsummit.org/sessions/2023/troubleshooting-slow-running-beam-pipelines/
 
-** Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
+** [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
 - https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
 
-** Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
+** [#B] Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
 
 - https://beamsummit.org/sessions/2023/loading-geospatial-data-to-google-bigquery/
+
+** AI Camp: Generative AI meetup
