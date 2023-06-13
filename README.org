@@ -84,21 +84,43 @@
 
 ** How to Fail with Real-time Analytics by Matthew Housley
 
-https://beamsummit.org/sessions/2023/how-to-fail-realtime-analytics/
+- https://beamsummit.org/sessions/2023/how-to-fail-realtime-analytics/
 
 - Kafka
 - Beam 
 - Kubernetes cluster 
 - SLA/SLO/SLI
 
+** Beam ML past, present and future by Kerry Donny-Clark & Reza Rokni
+
+#+begin_src python
+  with beam.Ppeline as p:
+      (p
+       | filter Matchfiles
+       | map lambda)
+#+end_src
+
+- https://github.com/apache/beam/tree/master/examples/notebooks/beam-ml
+
+*** Generative AI
+
+- https://github.com/apache/beam/blob/master/examples/notebooks/beam-ml/run_inference_generative_ai.ipynb (hugging face)
+
+*** TensorFlow Hub
+
+- https://github.com/apache/beam/blob/master/examples/notebooks/beam-ml/run_inference_with_tensorflow_hub.ipynb
+
+- https://www.tensorflow.org/hub
+
+
 ** Troubleshooting Slow Running Beam Pipelines by Mehak Gupta
 
-https://beamsummit.org/sessions/2023/troubleshooting-slow-running-beam-pipelines/
+- https://beamsummit.org/sessions/2023/troubleshooting-slow-running-beam-pipelines/
 
 ** Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
-https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
+- https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
 
 ** Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
 
-https://beamsummit.org/sessions/2023/loading-geospatial-data-to-google-bigquery/
+- https://beamsummit.org/sessions/2023/loading-geospatial-data-to-google-bigquery/

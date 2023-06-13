@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+bash --version 
+
 # Name: beam-summit-2023
 # Description: Script to build out directories with presentation title, speaker, and tags from Beam Summit 2023 schedule
 # Author: Jason Walsh <j@wal.sh>
@@ -27,7 +29,10 @@ TAGS="#BeamSummit2023 #ApacheBeam #DataEngineering #MachineLearning"
 echo "Checking for $SPEAKER"
 
 # Loop through files containing schedule
-grep -l "$SPEAKER" $SESSIONS_FILE | while read -r file; do
+while read -r file; do
+    # grep -l "$SPEAKER" $SESSIONS_FILE |     
+
+    echo "DEBUG: $file"
     # Extract title from file and transform for safer directory name
     TITLE="$(sed -n 's/%//p' <<< "$(grep -o '## .*' "$file" | head -n 1 | sed 's/## //' | iconv -t ascii//TRANSLIT//IGNORE | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-zA-Z0-9]+/-/g')")"
 
@@ -53,4 +58,4 @@ grep -l "$SPEAKER" $SESSIONS_FILE | while read -r file; do
             cd ..
 	fi
     fi
-done
+done < $SESSIONS_FILE
