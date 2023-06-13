@@ -135,6 +135,25 @@ Use a hawaiian pop art theme showing corporate offices
 
 - https://beamsummit.org/sessions/2023/troubleshooting-slow-running-beam-pipelines/
 
+- Identification of slow pipelines 
+- MTTR metrics
+
+#+begin_src dot
+  digraph G {
+      logs -> cause 
+      logs -> quotas
+      ...
+  }
+#+end_src
+
+- GCP dashboarding 
+- worker-startup, worker, docker, kubelet, shuffler
+- This is a subset of system, vm-health, vm-monitor, ...
+- Job Metrics > throughput 
+- Metrics > CPU utilization
+- Data freshness
+- Batch > Execution Details > straggler detection (reshuffle)
+
 ** [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
 - https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
