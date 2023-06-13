@@ -76,10 +76,29 @@
 - 09:00 AM - 10:30 AM: Workshop: Catch them if you can - Observability and monitoring by Wei Hsia
 - 09:00 AM - 10:30 AM: Workshop: Step by step development of a streaming pipeline in Python by Anthony L
 
+* Actions 
+
+- https://www.cloudskillsboost.google/catalog?qlcampaign=1h-opensource-27
+
 * Session Notes 
 
 ** How to Fail with Real-time Analytics by Matthew Housley
 
+https://beamsummit.org/sessions/2023/how-to-fail-realtime-analytics/
+
 - Kafka
 - Beam 
 - Kubernetes cluster 
+- SLA/SLO/SLI
+
+** Troubleshooting Slow Running Beam Pipelines by Mehak Gupta
+
+https://beamsummit.org/sessions/2023/troubleshooting-slow-running-beam-pipelines/
+
+** Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
+
+https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
+
+** Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
+
+https://beamsummit.org/sessions/2023/loading-geospatial-data-to-google-bigquery/
