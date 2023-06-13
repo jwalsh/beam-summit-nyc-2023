@@ -1,0 +1,79 @@
+*Beam Summit 2023*
+
+**Tue, 13 Jun**
+
+- 09:00 AM - 09:15 AM: Welcome by Danielle Syse
+- 09:15 AM - 09:45 AM: How to Fail with Real-time Analytics by Matthew Housley
+- 09:45 AM - 10:30 AM: Beam ML past, present and future by Kerry Donny-Clark & Reza Rokni
+- 10:30 AM - 11:00 AM: Break
+- 11:00 AM - 11:25 AM: Beam at Talend - the long road from incubator project to cloud-based Pipeline Designer tool by Alexey Romanenko
+- 11:00 AM - 11:50 AM: How to write an IO for Beam by John Casey
+- 11:00 AM - 11:50 AM: Multi-language pipelines: a unique Beam feature that will make your team more efficient by Chamikara Jayalath
+- 11:30 AM - 11:55 AM: Scaling Public Internet Data Collection With Apache Beam by Lior Dadosh
+- 12:00 PM - 12:50 PM: A Beginners Guide to Avro and Beam Schemas Without Smashing Your Keyboard by Devon Peticolas
+- 12:00 PM - 12:50 PM: Beam IO: CDAP And SparkReceiver IO Connectors Overview by Alex Kosolapov & Elizaveta Lomteva
+- 12:00 PM - 12:30 PM: Managed Stream Processing through Apache Beam at LinkedIn by Xinyu Liu, Bingfeng Xia & +1 More Speakers
+- 01:00 PM - 02:00 PM: Lunch
+- 02:00 PM - 02:25 PM: Easy Cross-Language With SchemaTransforms: Use Your Favorite Java Transform In Python SDK by Ahmed Abualsaud
+- 02:00 PM - 02:25 PM: From Dataflow Templates to Beam: Chartboost’s Journey by Austin Bennett & Ferran Fernandez
+- 02:30 PM - 02:55 PM: Cross-language JdbcIO enabled by Beam portable schemas by Yi Hu
+- 02:30 PM - 02:55 PM: Mapping Data to FHIR with Apache Beam by Alex Fragotsis
+- 02:30 PM - 02:55 PM: Meeting Security Requirements For Apache Beam Pipelines On Google Cloud by Lorenzo Caggioni
+- 03:00 PM - 03:25 PM: Introduction to Clustering in Apache Beam by Jasper Van den Bossche
+- 03:00 PM - 03:25 PM: Oops I *actually* wrote a Portable Beam Runner in Go by Robert Burke
+- 03:00 PM - 03:25 PM: Simplifying Speech-to-Text Processing with Apache Beam and Redis by Pramod Rao & Prateek Sheel
+- 03:30 PM - 03:55 PM: Developing (experimental) Rust SDKs and a Beam engine for IoT devices by Sho Nakatani
+- 03:30 PM - 03:55 PM: Hot Key Detection and Handling in Apache Beam Pipelines by Shafiqa Iqbal & Ikenna Okolo
+- 03:30 PM - 03:55 PM: Scaling Up The OpenTelemetry Collector With Beam Go by Alex Van Boxel
+- 04:00 PM - 04:15 PM: Break
+- 04:15 PM - 04:40 PM: Managing dependencies of Python pipelines by Valentyn Tymofieiev
+- 04:15 PM - 04:40 PM: Troubleshooting Slow Running Beam Pipelines by Mehak Gupta
+- 04:15 PM - 04:40 PM: Unbreakable & Supercharged Beam Apps with Scala + ZIO by Sahil Khandwala & Aris Vlasakakis
+- 04:45 PM - 05:35 PM: Beam loves Kotlin: full pipeline with Kotlin and Midgard library by Mazlum Tosun
+- 04:45 PM - 05:45 PM: Community Discussion: Future of Beam by Alex Van Boxel
+- 04:45 PM - 05:10 PM: Resolving out of memory issues in Beam Pipelines by Zeeshan Khan
+- 05:15 PM - 05:40 PM: Benchmarking Beam pipelines on Dataflow by Pranav Bhandari
+
+**Wed, 14 Jun**
+
+- 09:00 AM - 10:00 AM: Founders' Panel by Federico Patota, Reuven Lax & +2 More Speakers
+- 10:00 AM - 10:30 AM: Break
+- 10:30 AM - 10:55 AM: Apache Beam and Ensemble Modeling: A Winning Combination for Machine Learning by Shubham Krishna
+- 10:30 AM - 10:55 AM: Dealing with order in streams using Apache Beam by Israel Herraiz
+- 10:30 AM - 10:55 AM: Running Apache Beam on Kubernetes: A Case Study by Sascha Kerbler
+- 11:00 AM - 11:25 AM: Building Fully Managed Service for Beam Jobs with Flink on Kubernetes by Talat Uyarer & Rishabh Kedia
+- 11:00 AM - 11:25 AM: Getting started with Apache Beam Quest by Svetak Sundhar
+- 11:00 AM - 11:50 AM: Per Entity Training Pipelines in Apache Beam by Jasper Van den Bossche
+- 11:30 AM - 11:55 AM: Running Beam Multi Language Pipeline on Flink Cluster on Kubernetes by Lydian Lee
+- 11:30 AM - 11:55 AM: Too big to fail - a Beam Pattern for enriching a Stream using State and Timers by Tobias Kaymak & Israel Herraiz
+- 12:00 PM - 12:25 PM: Deduplicating and analysing time-series data with Apache Beam and QuestDB by Javier Ramirez
+- 12:00 PM - 12:50 PM: How many ways can you skin a cat, if the cat is a problem that needs an ML model to solve? by Kerry Donny-Clark
+- 12:00 PM - 12:25 PM: Machine Learning Platform Tooling with Apache Beam on Kubernetes by Charles Adetiloye
+- 12:30 PM - 12:55 PM: Design considerations to operate a stateful streaming pipeline as a service by Bhupinder Sindhwani & Israel Herraiz
+- 12:30 PM - 01:00 PM: Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
+- 01:00 PM - 02:00 PM: Lunch
+- 02:00 PM - 02:25 PM: Large scale data processing Using Apache Beam and TFX libraries by Olusayo Olumayode Akinlaja
+- 02:00 PM - 02:25 PM: Parallelizing Skewed Hbase Regions using Splittable Dofn by Prathap Reddy
+- 02:00 PM - 02:25 PM: Write your own model handler for RunInference! by Ritesh Ghorse
+- 02:30 PM - 02:55 PM: Case study: Using statefulDofns to process late arriving data by Amruta Deshmukh
+- 02:30 PM - 02:55 PM: How to balance power and control when using Dataflow with an OLTP SQL Database by Florian Bastin & Leo Babonnaud
+- 02:30 PM - 02:55 PM: Power Realtime Machine Learning Feature Engineering with Managed Beam at LinkedIn by Yanan Hao & David Shao
+- 03:00 PM - 03:50 PM: CI/CD for Dataflow with Flex Templates and Cloud Build by Mazlum Tosun
+- 03:00 PM - 03:50 PM: Dataflow Streaming - What's new and what's coming by Tom Stepp & Iñigo San Jose Visiers
+- 03:00 PM - 03:25 PM: Optimizing Machine Learning Workloads on Dataflow by Alex Chan
+- 03:30 PM - 03:55 PM: ML model updates with side inputs in Dataflow streaming pipelines by Anand Inguva
+- 04:00 PM - 04:15 PM: Break
+- 04:15 PM - 05:15 PM: Beam Lightning Talks by Pablo Estrada
+- 04:15 PM - 04:40 PM: Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
+- 04:15 PM - 04:40 PM: Use Apache Beam to build Machine Learning Feature System at Affirm by Hao Xu
+- 04:45 PM - 05:10 PM: Accelerating Machine Learning Predictions with NVIDIA TensorRT and Apache Beam by Shubham Krishna
+- 04:45 PM - 05:10 PM: Streamlining Data Engineering and Visualization with Apache Beam and Power BI: A Real-World Case Study by Deexith Reddy
+- 05:30 PM - 08:00 PM: AI Camp: Generative AI meetup
+
+**Thu, 15 Jun**
+
+- 09:00 AM - 10:30 AM: Workshop: Application Modernization with Kafka and Beam by Sami Ahmed
+- 09:00 AM - 10:30 AM: Workshop: Catch them if you can - Observability and monitoring by Wei Hsia
+- 09:00 AM - 10:30 AM: Workshop: Step by step development of a streaming pipeline in Python by Anthony L
+
+
