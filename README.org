@@ -75,3 +75,11 @@
 - 09:00 AM - 10:30 AM: Workshop: Application Modernization with Kafka and Beam by Sami Ahmed
 - 09:00 AM - 10:30 AM: Workshop: Catch them if you can - Observability and monitoring by Wei Hsia
 - 09:00 AM - 10:30 AM: Workshop: Step by step development of a streaming pipeline in Python by Anthony L
+
+* Session Notes 
+
+** How to Fail with Real-time Analytics by Matthew Housley
+
+- Kafka
+- Beam 
+- Kubernetes cluster 
