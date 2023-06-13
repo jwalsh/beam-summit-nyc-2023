@@ -168,6 +168,15 @@ Juan Gris art of Apache Beam conference in NYC (mixed media: newspaper, histogra
 - GC thrashing 
 - machine types, decrease parallelism, or dataflow prime
 
+** Community Discussion: Future of Beam by Alex Van Boxel
+
+- Airflow
+- Multi-dimensional watermarks
+- DAGS and Beam 
+- Time as a concept 
+- Using graph databases and iteration with loop unrolling 
+- Graph traversal 
+
 ** [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
 - https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
