@@ -1,0 +1,24 @@
+digraph machine_learning_lifecycle {
+
+    // NODES
+    node[shape=box]
+    start[label="Start"]
+    update[style=filled, fillcolor=lightgrey]
+    analyze[style=filled, fillcolor=lightgrey]
+    train[style=filled, fillcolor=lightgrey]
+    deploy[style=filled, fillcolor=lightgrey]
+    evaluate[style=filled, fillcolor=lightgrey]
+    end[label="End"]
+
+    // EDGES
+    start -> update[label="Start New Project"]
+    update -> analyze[label="Data Analysis"]
+    analyze -> update[label="Update Data"]
+    analyze -> train[label="Train Model"]
+    train -> evaluate[label="Evaluate Model"]
+    evaluate -> deploy[label="Deploy Model"]
+    deploy -> evaluate[label="New Data"]
+    deploy -> end[label="Shutdown Model"]
+    evaluate -> analyze[label="Update Model"]
+    evaluate -> train[label="Retrain Model"]
+}
