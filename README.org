@@ -83,13 +83,11 @@
 - https://www.cloudskillsboost.google/catalog?qlcampaign=1h-opensource-27
 - https://www.tensorflow.org/hub/tutorials
 
-** [#A] Beam Examples 
+** TODO [#A] Beam Examples 
 
 - https://github.com/apache/beam/tree/master/sdks/python/apache_beam/examples
 
-* Session Notes 
-
-** K8S, Flink, 
+** TODO Python, Kafka, k8s, Flink, Beam
 
 Local environment: 
 
@@ -1226,8 +1224,170 @@ Real-world example: A company wants to track and monitor its development team's 
 
 By completing this exercise, engineers will learn how to build a comprehensive, production-ready data processing pipeline with Apache Beam. They will gain experience working with multiple data sources, incorporating schemas to define data structures, using side inputs for data enrichment and aggregation, and deploying pipelines on different runners for real-world performance analysis. By mastering these concepts and techniques, engineers will be able to tackle even more complex data processing challenges and develop powerful, adaptable solutions quickly and efficiently.
 
+[ME]: Creaet ### 15 for creatign a Beam model for training and deploying 
+
+cover offline data, data extraction, preparation, training, evaluation, trained model, model registy, serving, and the full ci/cd pipeline
+
+[AI]: ### Exercise 15: Creating a Machine Learning Pipeline with Apache Beam
+
+Objective: Develop an end-to-end machine learning pipeline using Apache Beam that covers the entire lifecycle of data processing, from data extraction and preparation to model training, evaluation, deployment, and serving.
+
+Tasks:
+
+1. Extract and prepare offline data for training and evaluation by developing an Apache Beam pipeline that reads data from various sources (e.g., CSV files, databases) and preprocesses it (e.g., cleaning, feature engineering).
+
+2. Train a machine learning model (e.g., using scikit-learn, TensorFlow, or PyTorch) on the processed data and evaluate its performance using suitable metrics (e.g., accuracy, F1 score).
+
+3. Serialize and save the trained model to a model registry (e.g., MLflow Model Registry, TensorFlow Model Registry, or an object storage service like Amazon S3).
+
+4. Create a CI/CD pipeline to automate the steps from data extraction to model deployment (e.g., using Jenkins, GitLab CI/CD, or GitHub Actions).
+
+5. Implement a model serving service (e.g., TensorFlow Serving, MLflow Model Serving, or a custom REST API) that loads the trained model and serves predictions on new data.
+
+6. Deploy the model serving service on a suitable platform (e.g., Google Cloud AI Platform, Amazon SageMaker, or Azure Machine Learning).
+
+7. Test the deployed model by making requests to the serving service and examining the predictions.
+
+Real-world example: A company wants to create a pipeline for training and deploying a machine learning model to predict customer lifetime value based on historical customer data. The model requires data from multiple sources like transaction records, customer interactions, and demographic information. They choose to use Apache Beam for its flexibility and scalability in processing the data and automate the end-to-end pipeline, including deploying the trained model for serving predictions.
+
+By completing this exercise, engineers will learn how to design and implement a comprehensive machine learning pipeline that covers key components such as data extraction, preprocessing, model training, evaluation, deployment, and serving. They will also gain experience in automating the CI/CD pipeline for machine learning models, streamlining the end-to-end process, and increasing efficiency and reliability of the deployments. This knowledge and experience will enable engineers to tackle advanced machine learning challenges and develop powerful, scalable solutions for real-world problems.
+
+[ME]: Update this exercise to emphasize per entity updates language models for Dutch, Spanis, and English
+
+[AI]: ### Exercise 15: Creating a Multilingual Machine Learning Pipeline with Apache Beam
+
+Objective: Develop an end-to-end machine learning pipeline using Apache Beam to train and deploy language models for Dutch, Spanish, and English, with a focus on updating the models per entity (e.g., per document, user, or topic).
+
+Tasks:
+
+1. Extract per entity offline data for training and evaluation by developing an Apache Beam pipeline that reads multilingual data with entity-level information from various sources (e.g., CSV files, databases) and preprocesses it (e.g., tokenization, removing stop words).
+
+2. Split data by language, ensuring you have separate datasets for Dutch, Spanish, and English.
+
+3. Train language models for Dutch, Spanish, and English on the respective processed datasets (e.g., using TensorFlow, PyTorch, or Hugging Face Transformers), emphasizing per-entity updates (e.g., fine-tuning the model for specific entities like documents, users, or topics).
+
+4. Evaluate the performance of each language model using suitable metrics (e.g., perplexity, F1 score) and record the evaluations for future comparison.
+
+5. Serialize and save each trained language model to a model registry (e.g., MLflow Model Registry, TensorFlow Model Registry, or an object storage service like Amazon S3) along with metadata specifying the language and the entity type.
+
+6. Create a CI/CD pipeline to automate the steps from multilingual data extraction to model deployment for each language (e.g., using Jenkins, GitLab CI/CD, or GitHub Actions).
+
+7. Implement a model serving service (e.g., TensorFlow Serving, MLflow Model Serving, or a custom REST API) that loads the respective language models and serves predictions on new per-entity data.
+
+8. Deploy the model serving service on a suitable platform (e.g., Google Cloud AI Platform, Amazon SageMaker, or Azure Machine Learning).
+
+9. Test the deployed multilingual models by making requests to the serving service with new per-entity data in Dutch, Spanish, and English, examining the predictions.
+
+Real-world example: A multinational company wants to create a pipeline for training and deploying language models that can process and analyze textual data in Dutch, Spanish, and English at an entity level, such as per document or user. They choose to use Apache Beam for its flexibility and scalability in processing multilingual and per-entity data and automate the end-to-end pipeline, including deploying the trained models for serving predictions.
+
+By completing this exercise, engineers will learn how to design and implement a comprehensive multilingual machine learning pipeline that covers key components such as data extraction, preprocessing, model training, evaluation, deployment, and serving. They will also gain experience in handling per-entity updates for language models, working with different languages, and automating the CI/CD pipeline for these models. This knowledge and experience will enable engineers to tackle advanced multilingual and entity-specific machine learning challenges and develop powerful, scalable solutions for real-world problems.
+
+[ME]: Given all of these exercises what would be a good name for a repository with all of the exercies. Also provide a description for GitHub and topic tags
+
+[AI]: Repository Name: `beam-data-processing-exercises`
+
+Description: A collection of hands-on Apache Beam exercises for learning data processing, machine learning, and deployment on various runners and platforms.
+
+Topic Tags: `apache-beam`, `data-processing`, `stream-processing`, `machine-learning`, `python`, `java`, `cloud`, `runners`, `big-data`, `real-time`, `batch-processing`, `side-inputs`, `schemas`, `multilingual`
+
+[ME]: Create a shell script to build out the exercise directories at the top level 
+
+[AI]: Here is a shell script to build out the exercise directories at the top level:
+
+```sh
+#!/bin/bash
+
+# Create top-level directory
+mkdir beam-data-processing-exercises
+cd beam-data-processing-exercises
+
+# Create individual exercise directories
+for i in {1..15}
+do
+    mkdir "Exercise_$i"
+    touch "Exercise_$i/README.md"
+done
+
+# Return to the original directory
+cd ..
+
+echo "Directory structure created successfully."
+```
+
+To use this script, create a file named `create_directories.sh`, copy the script content into the file, and then run `chmod +x create_directories.sh` to make the script executable. Finally, run `./create_directories.sh` to create the exercise directories at the top level.
+
+[ME]: Create another exercise for predicting incomes by educatio nelevel with Beam using per entity model training and illustrate the following flow in a dot file for load data, clean data, group per education elvel, train models, and save models
+
+[AI]: ### Exercise 16: Predicting Incomes by Education Level with Apache Beam
+
+Objective: Develop an Apache Beam pipeline to predict incomes by education level, leveraging per-entity model training for per education level model creation and updating.
+
+Tasks:
+
+1. Load and clean data from a source (e.g., a CSV file containing information on individuals' incomes, education levels, and other demographic data) using an Apache Beam pipeline.
+
+2. Preprocess the data (e.g., one-hot encoding categorical features, normalizing continuous features).
+
+3. Group the cleaned data records by education level and create a separate dataset for each education level entity.
+
+4. Train income prediction models for each education level entity (e.g., using scikit-learn, TensorFlow, or PyTorch), and evaluate their performances using suitable metrics (e.g., mean squared error, R-squared).
+
+5. Serialize and save the trained models with metadata specifying the education level entity details in a model registry (e.g., MLflow Model Registry, TensorFlow Model Registry, or an object storage service like Amazon S3).
+
+6. Test the pipeline locally using the DirectRunner.
+
+DOT File Representation:
+
+```
+digraph G {
+    rankdir=LR;
+    a [label = "Load Data"]
+    b [label = "Clean Data"]
+    c [label = "Group Per Education Level"]
+    d [label = "Train Models Per Education Level"]
+    e [label = "Save Models"]
+
+    a -> b -> c -> d -> e;
+}
+```
+
+The DOT file representation illustrates the flow of the pipeline steps from loading data through to saving the trained models. The jobs include loading and cleaning the data, grouping by education level, training income prediction models per education level, and finally saving the trained models.
+
+By completing this exercise, engineers will learn how to create an Apache Beam pipeline for processing and grouping data by education level entities. They will gain experience in training machine learning models per entity, in this case, education level, and deploying the models in a registry. This knowledge will equip them with the skills to tackle similar data processing challenges and develop effective and efficient solutions for real-world problems.
+
+[ME]: Update the following to reflect the new meaning of this repository: 
+
+SSE Cloud Bootcamp
+Welcome to the SSE Cloud Bootcamp targeted to staff engineers! This bootcamp aims to provide a foundation in streaming data and eventing systems so that you can better understand, architect, and develop solutions in this domain. Please visit https://github.com/jwalsh/sse-cloud-bootcamp for the latest updates and information.
+
+[AI]: SSE Cloud Data Processing Bootcamp
+Welcome to the SSE Cloud Data Processing Bootcamp targeted to staff engineers! This bootcamp aims to provide a foundation in streaming data, event-driven systems, and data processing pipelines so that you can better understand, architect, and develop solutions in this domain using Apache Beam and various cloud technologies. Please visit https://github.com/jwalsh/sse-cloud-data-processing-bootcamp for the latest updates and information.
+
+[ME]: Remove reference to staff engineers
+
+[AI]: SSE Cloud Data Processing Bootcamp
+Welcome to the SSE Cloud Data Processing Bootcamp! This bootcamp aims to provide a foundation in streaming data, event-driven systems, and data processing pipelines so that you can better understand, architect, and develop solutions in this domain using Apache Beam and various cloud technologies. Please visit https://github.com/jwalsh/sse-cloud-data-processing-bootcamp for the latest updates and information.
+
 [ME]: 
 #+end_ai
+
+
+apache-beam
+data-processing
+stream-processing
+machine-learning
+python
+java
+cloud
+runners
+big-data
+real-time
+batch-processing
+side-inputs
+schemas
+multilingual
+
+* Session Notes 
 
 ** [#C] How to Fail with Real-time Analytics by Matthew Housley
 
@@ -1318,9 +1478,29 @@ Juan Gris art of Apache Beam conference in NYC (mixed media: newspaper, histogra
 
 ** [#C] Founders' Panel by Federico Patota, Reuven Lax & +2 More Speakers
 
-** Apache Beam and Ensemble Modeling: A Winning Combination for Machine Learning by Shubham Krishna
+** [#C] Apache Beam and Ensemble Modeling: A Winning Combination for Machine Learning by Shubham Krishna
 
 - https://beamsummit.org/sessions/2023/apache-beam-and-ensemble-modeling-a-winning-combination-for-machine-learning/
+
+- Sklean, Pytorch models 
+
+#+begin_src python
+  with pipeline as p:
+    ...
+#+end_src
+
+Example: Create image caption and ranks with sequential pattern (BLIP (Salesforce), CLIP (validation))
+
+DAG:
+
+#+begin_src dot
+  digraph G { 
+	  url -> blip -> captions-> clip;
+	  url -> { read, preprocess, inference } 
+	  input -> inference -> prediction;
+  }
+
+#+end_src
 
 ** [#C] Running Apache Beam on Kubernetes: A Case Study by Sascha Kerbler
 ** [#C] How many ways can you skin a cat, if the cat is a problem that needs an ML model to solve? by Kerry Donny-Clark
@@ -1720,6 +1900,11 @@ def test_onnx_predict():
 ** [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
 - https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
+
+  
+- Consider the use of LLMs as a workflow consideration
+- Pretty signifant number of people using daily (1/3)
+- Attention Is All You Need https://arxiv.org/abs/1706.03762
 
 ** [#A] Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
 
