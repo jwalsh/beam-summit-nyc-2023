@@ -1719,7 +1719,7 @@ Available targets:
 
 * Session Notes 
 
-** [#C] How to Fail with Real-time Analytics by Matthew Housley
+** DONE [#C] How to Fail with Real-time Analytics by Matthew Housley
 
 - https://beamsummit.org/sessions/2023/how-to-fail-realtime-analytics/
 
@@ -1808,7 +1808,7 @@ Juan Gris art of Apache Beam conference in NYC (mixed media: newspaper, histogra
 
 ** DONE [#C] Founders' Panel by Federico Patota, Reuven Lax & +2 More Speakers
 
-** [#C] Apache Beam and Ensemble Modeling: A Winning Combination for Machine Learning by Shubham Krishna
+** DONE [#C] Apache Beam and Ensemble Modeling: A Winning Combination for Machine Learning by Shubham Krishna
 
 - https://beamsummit.org/sessions/2023/apache-beam-and-ensemble-modeling-a-winning-combination-for-machine-learning/
 
@@ -2227,7 +2227,7 @@ def test_onnx_predict():
 
 #+end_ai
 
-** TODO [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
+** DONE [#A] Using Large Language Models in Data Engineering Tasks by Sean Jensen-Grey & Vince Gonzalez
 
 - https://beamsummit.org/sessions/2023/using-llm-data-engineering-tasks/
 
@@ -2288,7 +2288,7 @@ Note: This concept can easily be adapted to any visual art style, including pain
 [[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_1.png]]
 [[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image.png]]
 
-** [#A] Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
+** DONE [#A] Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
 
 - https://beamsummit.org/sessions/2023/loading-geospatial-data-to-google-bigquery/
 
@@ -2298,6 +2298,6 @@ Note: This concept can easily be adapted to any visual art style, including pain
 - Vector and Raster 
 - geojson is the output of the polygonization process
  
-** Streamlining Data Engineering and Visualization with Apache Beam and Power BI: A Real-World Case Study by Deexith Reddy
+** DONE Streamlining Data Engineering and Visualization with Apache Beam and Power BI: A Real-World Case Study by Deexith Reddy
 
 ** [#B] AI Camp: Generative AI meetup
