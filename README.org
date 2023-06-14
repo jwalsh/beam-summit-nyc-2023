@@ -1387,6 +1387,30 @@ side-inputs
 schemas
 multilingual
 
+** Presentation: Image Prompt Generation through GPT 4
+
+
+#+begin_ai :image :size 256x256
+"Craft a melancholic image of a young woman dining alone on a park bench, with autumn leaves falling gently around her. Her distant gaze is directed towards a group of cheerful friends picnicking nearby, evoking a sense of yearning for inclusion."
+
+
+#+end_ai
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_8.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_7.png]]
+
+
+
+#+begin_ai :image :size 256x256
+Digitally rendered caricature of a cat with a sassy attitude and a furball for a sidekick
+#+end_ai
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_13.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_12.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_11.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_10.png]]
+
+
+Digitally rendered caricature of a cat with a sassy attitude and a furball for a sidekick
+
 * Session Notes 
 
 ** [#C] How to Fail with Real-time Analytics by Matthew Housley
@@ -1909,9 +1933,64 @@ def test_onnx_predict():
 - ChatLLM + RLHF 
 - Use of the corrective effects 
 - Failure to consider the requirements for prompt generation
+- "You're holding it wrong" 
+- How To Ask Questions The Smart Way http://www.catb.org/~esr/faqs/smart-questions.html
+- Source, Question, Destination
+- ETL
+- Dimensionality tranform to answer as lower level space
+- Shots 
+- Example: quadratic equation solving (one shot)
+- Example: chain of thought for 
+- Example: total papers and Pandas dataframe + passing previous code
+- Example: test data generation
+- Hallucinations about things that should exist
+- On Bullshit: https://press.princeton.edu/books/hardcover/9780691122946/on-bullshit 
+
+#+begin_ai
+Medival art of knight holding sword by blade rather than handle to illustrate: "You're holding it wrong"  as how to use tools correctly
+
+[AI]: I'm an AI language model, and I cannot create images or drawings. However, I can suggest a concept or description for the artwork and you could collaborate with an artist to bring it to life. 
+
+Concept: 
+
+Title: "You're Holding It Wrong: The Misguided Knight"
+
+Scene: A medieval tournament ground, where knights are displaying their combat skills.
+
+In the foreground, a knight is seen gripping his sword by the blade instead of the handle, seemingly puzzled by the onlookers' reactions. His hands are covered with metal gauntlets which protect him from the sharp blade. His posture and facial expression convey confusion. 
+
+In the background, other knights and spectators observe this unusual sight. Some of them point at the misguided knight, trying to show him the right way to hold the sword. A couple of knights laugh at the scene, while others look concerned for his safety. 
+
+Near the misguided knight, an experienced and wise knight, probably a mentor, can be seen approaching him, ready to give him proper guidance on using a sword.
+
+The artwork would convey the importance of using tools correctly, as well as the value of guidance from experienced individuals.
+
+Note: This concept can easily be adapted to any visual art style, including painting, graphic design, or illustration.
+
+[ME]: 
+#+end_ai
+
+
+#+begin_ai :image :size 256x256
+"You're Holding It Wrong: The Misguided Knight": In the foreground, a knight is seen gripping his sword by the blade instead of the handle
+#+end_ai
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_6.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_5.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_4.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_3.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_2.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image_1.png]]
+[[file:/Users/jasonwalsh/org/org-ai-images/20230614_256x256_image.png]]
+
 
 ** [#A] Loading Geospatial data to Google BigQuery by Sean Jensen-Grey & Dong Sun
 
 - https://beamsummit.org/sessions/2023/loading-geospatial-data-to-google-bigquery/
 
+- Annotation of data could be annotated (e.g. distribution center)
+- BigQuery
+- Standard GIS function for queries
+- Vector and Raster 
+- geojson is the output of the polygonization process
+ 
 ** [#B] AI Camp: Generative AI meetup
