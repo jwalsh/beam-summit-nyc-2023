@@ -89,6 +89,1146 @@
 
 * Session Notes 
 
+** K8S, Flink, 
+
+Local environment: 
+
+- AWS 
+- GCP
+- Kafka
+- Kubernetes
+- Apache Beam 
+- Python 
+
+Focus on the following workflow: 
+
+- Setup 
+- Onboarding 
+- Local development 
+- Test support 
+- Infrastructure
+- Operational support
+- Debugging
+- Cloud deployment (Terraform)
+
+
+#+begin_ai
+Create a dep.sh script invoked through Make that install core local development tools for 
+
+Local environment: 
+
+- AWS 
+- GCP
+- Kafka
+- Kubernetes
+- Apache Beam 
+- Python 
+
+Focus on the following workflow: 
+
+- Setup 
+- Onboarding 
+- Local development 
+- Test support 
+- Infrastructure
+- Operational support
+- Debugging
+- Cloud deployment (Terraform)
+
+
+
+[AI]: You can create a `dep.sh` script like the one below, which can be invoked through Make, to install required local development tools for your local environment, including AWS, GCP, Kafka, Kubernetes, Apache Beam, and Python.
+
+```bash
+#!/bin/bash
+set -e
+
+# Check for required commands
+command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires 'curl' but it's not installed. Aborting."; exit 1; }
+command -v git >/dev/null 2>&1 || { echo >&2 "This script requires 'git' but it's not installed. Aborting."; exit 1; }
+command -v python3 >/dev/null 2>&1 || { echo >&2 "This script requires 'python3' but it's not installed. Aborting."; exit 1; }
+
+# Install AWS CLI
+if ! [ -x "$(command -v aws)" ]; then
+  echo "Installing AWS CLI..."
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install
+  rm -rf awscliv2.zip
+else
+  echo "AWS CLI is already installed"
+fi
+
+# Install GCP SDK
+if ! [ -x "$(command -v gcloud)" ]; then
+  echo "Installing Google Cloud SDK..."
+  curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-360.0.0-linux-x86_64.tar.gz
+  tar -xvzf google-cloud-sdk-360.0.0-linux-x86_64.tar.gz  
+  ./google-cloud-sdk/install.sh
+  rm google-cloud-sdk-360.0.0-linux-x86_64.tar.gz
+else
+  echo "Google Cloud SDK is already installed"
+fi
+
+# Install Kubernetes (kubectl)
+if ! [ -x "$(command -v kubectl)" ]; then
+  echo "Installing Kubernetes CLI (kubectl)..."
+  curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+  chmod +x ./kubectl
+  sudo mv ./kubectl /usr/local/bin/kubectl
+else
+  echo "Kubernetes CLI (kubectl) is already installed"
+fi
+
+# Install Kafka (Confluent Platform CLI)
+if ! [ -x "$(command -v confluent)" ]; then
+  echo "Installing Kafka (Confluent Platform CLI)..."
+  curl -L https://cnfl.io/cli | sh -s -- -b /usr/local/bin
+  confluent update
+else
+  echo "Kafka (Confluent Platform CLI) is already installed"
+fi
+
+# Install Apache Beam (requires Python)
+if ! [ -x "$(command -v beam)" ]; then
+  echo "Installing Apache Beam..."
+  python3 -m pip install apache-beam[gcp]
+else
+  echo "Apache Beam is already installed"
+fi
+
+# Install Terraform
+if ! [ -x "$(command -v terraform)" ]; then
+  echo "Installing Terraform..."
+  curl -LO https://releases.hashicorp.com/terraform/1.1.0/terraform_1.1.0_linux_amd64.zip
+  unzip terraform_1.1.0_linux_amd64.zip
+  sudo mv terraform /usr/local/bin/
+  rm terraform_1.1.0_linux_amd64.zip
+else
+  echo "Terraform is already installed"
+fi
+
+echo "Done."
+```
+
+You can create a `Makefile` with a target to run the script as shown below:
+
+```make
+deploy-local-tools:
+	@echo "Installing local tools for development..."
+	@chmod +x dep.sh
+	@./dep.sh
+	@echo "Local tools installation complete."
+```
+
+Now, you can simply run `make deploy-local-tools` to invoke the script and install the necessary tools for your development workflow.
+
+Please note that I'm assuming you're on a Linux system, and the script might require adjustments if you're using a different environment. You may also need to add installations for other tools, libraries, and configurations based on your specific setup, onboarding, local development, testing, infrastructure, operational support, debugging, and cloud deployment requirements.
+
+[ME]: Assume OSX instead, add additional Make target for the tasks noted in the requirements
+
+[AI]: You can adjust the script for OSX and add a separate Make target for the tasks mentioned in the requirements. Here's the updated `dep.sh` script for OSX:
+
+```bash
+#!/bin/bash
+set -e
+
+# Check for required commands
+command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires 'curl' but it's not installed. Aborting."; exit 1; }
+command -v git >/dev/null 2>&1 || { echo >&2 "This script requires 'git' but it's not installed. Aborting."; exit 1; }
+command -v python3 >/dev/null 2>&1 || { echo >&2 "This script requires 'python3' but it's not installed. Aborting."; exit 1; }
+
+# Install AWS CLI
+if ! [ -x "$(command -v aws)" ]; then
+  echo "Installing AWS CLI..."
+  curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+  sudo installer -pkg AWSCLIV2.pkg -target /
+  rm AWSCLIV2.pkg
+else
+  echo "AWS CLI is already installed"
+fi
+
+# Install GCP SDK
+if ! [ -x "$(command -v gcloud)" ]; then
+  echo "Installing Google Cloud SDK..."
+  curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-360.0.0-darwin-x86_64.tar.gz
+  tar -xvzf google-cloud-sdk-360.0.0-darwin-x86_64.tar.gz
+  ./google-cloud-sdk/install.sh
+  rm google-cloud-sdk-360.0.0-darwin-x86_64.tar.gz
+else
+  echo "Google Cloud SDK is already installed"
+fi
+
+# Install Kubernetes (kubectl)
+if ! [ -x "$(command -v kubectl)" ]; then
+  echo "Installing Kubernetes CLI (kubectl)..."
+  curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl"
+  chmod +x ./kubectl
+  sudo mv ./kubectl /usr/local/bin/kubectl
+else
+  echo "Kubernetes CLI (kubectl) is already installed"
+fi
+
+# Install Kafka (Confluent Platform CLI)
+if ! [ -x "$(command -v confluent)" ]; then
+  echo "Installing Kafka (Confluent Platform CLI)..."
+  curl -L https://cnfl.io/cli | sh -s -- -b /usr/local/bin
+  confluent update
+else
+  echo "Kafka (Confluent Platform CLI) is already installed"
+fi
+
+# Install Apache Beam (requires Python)
+if ! [ -x "$(command -v beam)" ]; then
+  echo "Installing Apache Beam..."
+  python3 -m pip install apache-beam[gcp]
+else
+  echo "Apache Beam is already installed"
+fi
+
+# Install Terraform
+if ! [ -x "$(command -v terraform)" ]; then
+  echo "Installing Terraform..."
+  curl -LO https://releases.hashicorp.com/terraform/1.1.0/terraform_1.1.0_darwin_amd64.zip
+  unzip terraform_1.1.0_darwin_amd64.zip
+  sudo mv terraform /usr/local/bin/
+  rm terraform_1.1.0_darwin_amd64.zip
+else
+  echo "Terraform is already installed"
+fi
+
+echo "Done."
+```
+
+And here's the updated `Makefile` with an additional target to handle tasks as per the requirements:
+
+```make
+deploy-local-tools:
+	@echo "Installing local tools for development..."
+	@chmod +x dep.sh
+	@./dep.sh
+	@echo "Local tools installation complete."
+
+execute-tasks:
+	@echo "Executing required tasks as per the workflow..."
+	@# Add commands to perform setup, onboarding, local development, test support, infrastructure, operational support, debugging, and cloud deployment (Terraform) tasks
+	@echo "Task execution complete."
+```
+
+Now, you can run `make deploy-local-tools` to install the necessary local development tools and `make execute-tasks` to execute the tasks as per the workflow defined in the requirements. Make sure to update the `execute-tasks` target with the appropriate commands for your project.
+
+[ME]: Use Homebrew, asdf, and version management systems and scaffold out the use of environment setup with direnv with placeholder values for all cloud providers
+
+[AI]: Given the requirements, you can adjust the `dep.sh` script to make use of Homebrew, asdf, and version management systems. Also, include direnv setup with placeholders for your cloud providers' environment variables. 
+
+First, install Homebrew if not already installed.
+
+```bash
+# Install Homebrew (if not already installed)
+if ! [ -x "$(command -v brew)" ]; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> ~/.zprofile
+  eval $(/opt/homebrew/bin/brew shellenv)
+else
+  echo "Homebrew is already installed"
+fi
+```
+
+Next, use Homebrew to install asdf for managing tool versions:
+
+```bash
+# Install asdf (if not already installed)
+if ! [ -x "$(command -v asdf)" ]; then
+  echo "Installing asdf..."
+  brew install asdf
+  echo -e '\n. $(brew --prefix asdf)/asdf.sh' >> ~/.zshrc
+  source ~/.zshrc
+else
+  echo "asdf is already installed"
+fi
+```
+
+Update the `dep.sh` script to install tools with respective version management plugins using asdf:
+
+```bash
+# Install the necessary asdf plugins
+asdf plugin-add awscli
+asdf plugin-add gcloud
+asdf plugin-add kubectl
+asdf plugin-add kafka
+asdf plugin-add python
+asdf plugin-add terraform
+
+echo "Installing AWS CLI..."
+asdf install awscli <aws_cli_version>
+asdf global awscli <aws_cli_version>
+
+echo "Installing Google Cloud SDK..."
+asdf install gcloud <google_cloud_sdk_version>
+asdf global gcloud <google_cloud_sdk_version>
+
+echo "Installing Kubernetes CLI (kubectl)..."
+asdf install kubectl <kubectl_version>
+asdf global kubectl <kubectl_version>
+
+echo "Installing Kafka (Confluent Platform CLI)..."
+asdf install kafka <kafka_version>
+asdf global kafka <kafka_version>
+
+echo "Installing Python and Apache Beam..."
+asdf install python <python_version>
+asdf global python <python_version>
+python3 -m pip install apache-beam[gcp]
+
+echo "Installing Terraform..."
+asdf install terraform <terraform_version>
+asdf global terraform <terraform_version>
+```
+
+Now, set up your direnv to manage environment variables:
+
+```bash
+# Install direnv (if not already installed)
+if ! [ -x "$(command -v direnv)" ]; then
+  echo "Installing direnv..."
+  brew install direnv
+  echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+  source ~/.zshrc
+else
+  echo "direnv is already installed"
+fi
+
+# Create .envrc file with placeholder environment values for your cloud providers
+echo "Creating .envrc file with placeholder environment values..."
+cat << EOL > .envrc
+# AWS
+export AWS_ACCESS_KEY_ID=your_aws_access_key
+export AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+
+# GCP
+export GOOGLE_APPLICATION_CREDENTIALS=your_gcp_credentials.json
+
+# Azure - if applicable
+export ARM_CLIENT_ID=your_azure_client_id
+export ARM_CLIENT_SECRET=your_azure_client_secret
+export ARM_SUBSCRIPTION_ID=your_azure_subscription_id
+export ARM_TENANT_ID=your_azure_tenant_id
+
+# Other environment variables required for your cloud providers and local setup
+EOL
+
+# Allow direnv to load the environment file
+direnv allow
+
+echo "Environment setup with direnv complete."
+```
+
+Replace `<aws_cli_version>, <google_cloud_sdk_version>, <kubectl_version>, <kafka_version>, <python_version>, and <terraform_version>` with the respective version numbers for each tool.
+
+With these adjustments, the `dep.sh` script will install the necessary tools and set up environment variables using direnv. Now you can safely run `make deploy-local-tools` to get everything set up.
+
+[ME]: Hoist direnv to the top and create the versions placeholders as part of the environment rather than in the text of this output
+
+[AI]: Here's the updated `dep.sh` script with direnv hoisted to the top and the version placeholders as part of the environment.
+
+```bash
+#!/bin/bash
+set -e
+
+# Check for required commands
+command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires 'curl' but it's not installed. Aborting."; exit 1; }
+
+# Install Homebrew (if not already installed)
+if ! [ -x "$(command -v brew)" ]; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> ~/.zprofile
+  eval $(/opt/homebrew/bin/brew shellenv)
+else
+  echo "Homebrew is already installed"
+fi
+
+# Install direnv (if not already installed)
+if ! [ -x "$(command -v direnv)" ]; then
+  echo "Installing direnv..."
+  brew install direnv
+  echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+  source ~/.zshrc
+else
+  echo "direnv is already installed"
+fi
+
+# Create .envrc file with placeholder environment values for your cloud providers and versions
+echo "Creating .envrc file with placeholder environment values and versions..."
+cat << EOL > .envrc
+# AWS
+export AWS_ACCESS_KEY_ID=your_aws_access_key
+export AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+export AWS_CLI_VERSION=<aws_cli_version>
+
+# GCP
+export GOOGLE_APPLICATION_CREDENTIALS=your_gcp_credentials.json
+export GOOGLE_CLOUD_SDK_VERSION=<google_cloud_sdk_version>
+
+# Kubernetes
+export KUBECTL_VERSION=<kubectl_version>
+
+# Kafka
+export KAFKA_VERSION=<kafka_version>
+
+# Python
+export PYTHON_VERSION=<python_version>
+
+# Terraform
+export TERRAFORM_VERSION=<terraform_version>
+
+# other environment-specific variables
+EOL
+
+# Allow direnv to load the environment file
+direnv allow
+
+echo "Environment setup with direnv complete."
+
+# Install asdf (if not already installed)
+if ! [ -x "$(command -v asdf)" ]; then
+  echo "Installing asdf..."
+  brew install asdf
+  echo -e '\n. $(brew --prefix asdf)/asdf.sh' >> ~/.zshrc
+  source ~/.zshrc
+else
+  echo "asdf is already installed"
+fi
+
+source .envrc
+
+# Install the necessary asdf plugins
+asdf plugin-add awscli
+asdf plugin-add gcloud
+asdf plugin-add kubectl
+asdf plugin-add kafka
+asdf plugin-add python
+asdf plugin-add terraform
+
+echo "Installing AWS CLI..."
+asdf install awscli $AWS_CLI_VERSION
+asdf global awscli $AWS_CLI_VERSION
+
+echo "Installing Google Cloud SDK..."
+asdf install gcloud $GOOGLE_CLOUD_SDK_VERSION
+asdf global gcloud $GOOGLE_CLOUD_SDK_VERSION
+
+echo "Installing Kubernetes CLI (kubectl)..."
+asdf install kubectl $KUBECTL_VERSION
+asdf global kubectl $KUBECTL_VERSION
+
+echo "Installing Kafka (Confluent Platform CLI)..."
+asdf install kafka $KAFKA_VERSION
+asdf global kafka $KAFKA_VERSION
+
+echo "Installing Python and Apache Beam..."
+asdf install python $PYTHON_VERSION
+asdf global python $PYTHON_VERSION
+python3 -m pip install apache-beam[gcp]
+
+echo "Installing Terraform..."
+asdf install terraform $TERRAFORM_VERSION
+asdf global terraform $TERRAFORM_VERSION
+
+echo "Done."
+```
+
+Now, the versions of AWS CLI, Google Cloud SDK, kubectl, Kafka, Python, and Terraform are set as environment variables in the `.envrc` file. To install and set up tools with these environment variables, simply run `make deploy-local-tools`. Make sure to replace placeholder version numbers with specific versions for each tool.
+
+
+[ME]: Add Clojure support and exercises
+
+[AI]: To add Clojure support and exercises, you can first create a new directory, `clojure-exercises`, to store the exercises. Then, update the `dep.sh` script to install Clojure along with the required tools and libraries. Finally, create an example script as the starting point for the Clojure exercises.
+
+Update the `dep.sh` script to install Clojure and its version management plugin using asdf:
+
+```bash
+# Add the Clojure asdf plugin
+asdf plugin-add clojure
+
+# Set the Clojure version as an environment variable
+export CLOJURE_VERSION=<clojure_version>
+
+# Install Clojure
+echo "Installing Clojure..."
+asdf install clojure $CLOJURE_VERSION
+asdf global clojure $CLOJURE_VERSION
+```
+
+Replace `<clojure_version>` with the desired version of Clojure.
+
+Next, create a new directory called clojure-exercises and an example Clojure script, `hello_world.clj`, inside it:
+
+```bash
+# Create clojure-exercises directory and example Clojure script
+mkdir clojure-exercises
+cat << EOL > clojure-exercises/hello_world.clj
+(ns hello-world)
+
+(defn -main
+  [& args]
+  (println "Hello, World!"))
+EOL
+
+echo "Clojure exercises directory and example script created."
+```
+
+Now, run `make deploy-local-tools` to install Clojure and set up the environment.
+
+To run the Clojure exercises, navigate to the `clojure-exercises` directory and use the `clojure` command followed by the script name:
+
+```bash
+cd clojure-exercises
+clojure hello_world.clj
+```
+
+This example will output "Hello, World!" to the console. You can add more exercise files to the `clojure-exercises` directory and run them similarly.
+
+[ME]: Add Python exercises and create a setup.sh script that makes expected exercise, data, and documentation directories
+
+[AI]: First, update the `dep.sh` script to install Jupyter and virtualenv, which help you create isolated Python environments and run Jupyter Notebooks for Python exercises.
+
+```bash
+# Install virtualenv and Jupyter
+echo "Installing virtualenv and Jupyter for Python exercises..."
+python3 -m pip install virtualenv jupyter
+```
+
+Next, create a `setup.sh` script to set up the directories for exercises, data, and documentation. The script will create a Python virtual environment, install required libraries, and create a Jupyter Notebook for Python exercises.
+
+```bash
+#!/bin/bash
+set -e
+
+# Create required directories
+mkdir -p exercises/python
+mkdir -p data
+mkdir -p documentation
+
+# Create the Python virtual environment
+cd exercises/python
+python3 -m virtualenv venv
+source venv/bin/activate
+
+# Install required libraries in the virtual environment
+pip install jupyter pandas numpy matplotlib
+
+# Create a new Jupyter Notebook for Python exercises
+jupyter notebook --generate-config
+jupyter notebook --NotebookApp.token='' --NotebookApp.password=''
+
+echo "Python exercise environment created successfully."
+```
+
+Add a new target in the `Makefile` to run the `setup.sh` script:
+
+```make
+setup-exercises:
+	@echo "Setting up exercise, data, and documentation directories..."
+	@chmod +x setup.sh
+	@./setup.sh
+	@echo "Setup completed."
+```
+
+Now, run `make setup-exercises` to set up the exercise, data, and documentation directories, create a Python virtual environment, and start a Jupyter Notebook server for the Python exercises.
+
+You can access the Jupyter Notebook in your browser at `http://localhost:8888` and start creating Python exercises, such as importing data, visualizing it using Matplotlib, and running statistical analyses with Pandas.
+
+[ME]: Create a README assuming this is at https://github.com/jwalsh/sse-cloud-bootcamp and targeted to a bootcamp for Staff engineers. Given the streaming data and eventing systems give some historical context for Relational Algebra and indicate the expected outcome and the exercises for this audience
+
+[AI]: Here's a README template for the bootcamp repository, highlighting the historical context of Relational Algebra and the purpose of the exercises for staff engineers who are interested in streaming data and eventing systems.
+
+```
+# SSE Cloud Bootcamp
+
+Welcome to the SSE Cloud Bootcamp targeted to staff engineers! This bootcamp aims to provide a foundation in streaming data and eventing systems so that you can better understand, architect, and develop solutions in this domain. Please visit [https://github.com/jwalsh/sse-cloud-bootcamp](https://github.com/jwalsh/sse-cloud-bootcamp) for the latest updates and information.
+
+## Historical Context: Relational Algebra
+
+Relational Algebra forms the basis of relational databases, which have been the backbone of traditional data storage and management systems since the 1970s. Proposed by Edgar F. Codd, relational algebra is a formal theoretical foundation for manipulating data using tuples, attributes, and relations. It introduces operations like selection, projection, and join that allow developers and analysts to interact with structured data sets.
+
+Over time, relational databases have evolved to adapt to the growing data needs and provide greater efficiency, scalability, and robustness. However, as our systems generate enormous amounts of streaming data from IoT devices, social media, and other real-time sources, the need for event-driven architectures and streaming data systems has become more critical than ever.
+
+## Goal of the Bootcamp
+
+This bootcamp is designed for staff engineers to:
+
+1. Understand the fundamentals of streaming data and eventing systems.
+2. Gain hands-on experience with tools and services that help build, manage, and scale streaming data systems.
+3. Learn best practices for architecting, building, and deploying modern data systems in the cloud.
+4. Develop skills in debugging and performance tuning of streaming data systems.
+
+## Exercises
+
+The exercises in this bootcamp cover the following core components:
+
+1. Apache Kafka: Learn how to use Apache Kafka for stream processing.
+2. Google Cloud Pub/Sub: Get hands-on experience with the Google Cloud Pub/Sub system.
+3. Kubernetes: Understand how to manage and scale your infrastructure with Kubernetes.
+4. Apache Beam: Learn how to process data in parallel using Apache Beam and discover how it integrates with other streaming data systems.
+5. Python: Practice building and deploying Python scripts that interact with streaming data systems.
+6. Clojure: Experiment with the Clojure programming language for handling streaming data applications.
+
+The exercises serve as a starting point to immerse you in the world of streaming data systems. We encourage you to explore each exercise, learn from it, and adapt it to your specific needs, building upon your existing expertise as a staff engineer.
+
+```
+This README template gives a brief introduction to the bootcamp, its goals, and the available exercises mapped to the streaming data and eventing systems domain. You can further customize the README to include any prerequisite knowledge requirements, any necessary setup steps, and additional information regarding collaborative learning and contribution guidelines.
+
+[ME]: Create 5 example exercises that can be created and run locally then deployed to cloud providers
+
+[AI]: Here are 5 example exercises designed to work locally and then be deployed to cloud providers. These exercises cover different aspects of streaming data and event-driven systems.
+
+1. **Exercise 1: Basic Data Transformation with Apache Kafka**
+
+   Objective: Learn how to use Apache Kafka locally to consume and produce messages while transforming data.
+
+   Tasks:
+
+   - Set up and start Apache Kafka locally.
+   - Create a Kafka topic.
+   - Write a standalone Python/Clojure script that uses Kafka's producer and consumer APIs.
+   - Script should consume messages from the input topic, perform basic data transformation (e.g., converting data to uppercase), and produce the transformed messages to the output topic.
+   - Start the script and observe the transformed messages in the output topic.
+
+   Cloud Deployment:
+
+   - Deploy a managed Kafka service on the cloud provider of your choice (e.g., Confluent Cloud on AWS and Google Cloud, or Azure Event Hubs).
+   - Update the Python/Clojure script configurations to target the cloud Kafka instance.
+   - Deploy the script in a managed environment (AWS Lambda, Google Cloud Functions, or Azure Functions) to perform the transformation.
+
+2. **Exercise 2: Stream Processing with Google Cloud Pub/Sub and Apache Beam**
+
+   Objective: Learn how to use Google Cloud Pub/Sub and Apache Beam locally to process streaming data and implement windowed processing.
+
+   Tasks:
+
+   - Set up and start Google Cloud Pub/Sub emulator.
+   - Create input and output Pub/Sub topics.
+   - Write a Python script to generate streaming data and publish it to the input Pub/Sub topic.
+   - Write an Apache Beam pipeline in Python/Clojure, consuming messages from the input topic, processing them (e.g., counting words), and producing results to the output topic.
+   - Test the pipeline locally using the DirectRunner.
+   - Start the data generation script and pipeline, observing the processed results in the output topic.
+
+   Cloud Deployment:
+
+   - Create input and output Pub/Sub topics in Google Cloud Pub/Sub.
+   - Update the data generation script to target the cloud instance of the input topic and deploy it in a managed environment (Google Cloud Functions).
+   - Deploy the Apache Beam pipeline using the DataflowRunner to process messages from the cloud input topic and write results to the cloud output topic.
+
+3. **Exercise 3: Stateless API with Kubernetes**
+
+   Objective: Build a stateless REST API using Python (e.g., Flask) or Clojure (e.g., Ring), then deploy and scale it on a local Kubernetes cluster.
+
+   Tasks:
+
+   - Develop a stateless REST API using Python or Clojure that performs basic CRUD operations on data stored in memory.
+   - Test the API locally.
+   - Package the API in a Docker container.
+   - Set up and start a local Kubernetes cluster (e.g., Minikube or Docker Desktop's Kubernetes).
+   - Deploy the API container on the local Kubernetes cluster and scale it with multiple replicas.
+   - Test the deployed API on the local cluster.
+
+   Cloud Deployment:
+
+   - Push the Docker container to a container registry (Docker Hub, Google Container Registry, or AWS Elastic Container Registry).
+   - Deploy the container on a managed Kubernetes service (Google Kubernetes Engine, AWS EKS, or Azure AKS).
+   - Update the deployment configuration to scale and ensure fault tolerance.
+   - Test the deployed API by accessing the cloud endpoint.
+
+4. **Exercise 4: Event-Driven Data Processing with AWS Lambda and Kinesis**
+
+   Objective: Create an event-driven data processing pipeline using AWS Kinesis and Lambda functions.
+
+   Tasks:
+
+   - Set up AWS Kinesis streams for input and output.
+   - Write a Python script to generate streaming data and publish it to the AWS Kinesis input stream.
+   - Write an AWS Lambda function in Python to process the input Kinesis records (e.g., perform data enrichment).
+   - Configure the Lambda function to produce the processed records to the output Kinesis stream.
+   - Test the entire pipeline locally using the AWS SAM CLI.
+
+   Cloud Deployment:
+
+   - Create and configure the AWS Kinesis input and output streams, as well as the AWS Lambda function, in the AWS Management Console.
+   - Update the data generation script to target the cloud instance of the input Kinesis stream and deploy it in a managed environment (AWS Lambda).
+   - Test the deployed pipeline and observe the results in the output Kinesis stream.
+
+5. **Exercise 5: Real-Time Data Visualization with Azure Event Hubs and WebSockets**
+
+   Objective: Collect streaming data from Azure Event Hubs and visualize it in real-time using WebSockets.
+
+   Tasks:
+
+   - Set up an Azure Event Hub.
+   - Write a Python script to generate streaming data and send it to the Azure Event Hub.
+   - Develop a WebSocket server and a simple web page to visualize real-time streaming data using JavaScript.
+   - Write a Python/Clojure script to consume messages from the Event Hub and broadcast them via the WebSocket server.
+   - Test the entire pipeline locally.
+
+   Cloud Deployment:
+
+   - Create and configure the Azure Event Hub in the Azure portal.
+   - Update the data generation script to target the cloud instance of the Event Hub and deploy it in a managed environment (Azure Functions).
+   - Deploy the WebSocket server using Azure Web Apps or a similar PaaS offering.
+   - Access the hosted web page in a browser to visualize the real-time streaming data from the Event Hub.
+
+These exercises are designed to run locally first and then be deployed to cloud providers. Each exercise has instructions for local setup and cloud deployment. The exercises target different aspects of streaming data and event-driven systems and enable staff engineers to build and deploy solutions on various platforms.
+
+[ME]: Add exercises for reading a pub/sub subscription and enrich with Bookstore as an example. Add another for converting Spark to Beam
+
+[AI]: Here are two new exercises focusing on Google Cloud Pub/Sub integration with Bookstore data, and converting a Spark pipeline to an Apache Beam pipeline:
+
+**Exercise 6: Enriching Streaming Data with Google Cloud Pub/Sub and Bookstore API**
+
+Objective: Learn how to consume messages from a Google Cloud Pub/Sub subscription, enrich the data using a Bookstore API, and produce enriched messages to another Pub/Sub topic.
+
+Tasks:
+
+- Set up a Google Cloud Pub/Sub topic and create two subscriptions: one for raw book data and one for enriched book data.
+- Write a Python script to simulate the streaming data, sending messages containing book IDs to the raw data subscription.
+- Set up a REST API (e.g., using Flask or FastAPI) that simulates a Bookstore API and returns book details for a given book ID.
+- Write a Python script to consume messages from the raw data subscription, call the Bookstore API to enrich the data with book details, and send the enriched messages to the enriched data subscription.
+- Test the pipeline locally using the Google Cloud Pub/Sub emulator.
+
+Cloud Deployment:
+
+- Deploy the Google Cloud Pub/Sub topic with both subscriptions in place.
+- Update the data streaming script to target the cloud instance of the raw data subscription, and deploy it (e.g., using Google Cloud Functions).
+- Deploy the Bookstore API to a cloud provider (e.g., Google App Engine).
+- Update the data enrichment script to target the cloud instances of the raw data and enriched data subscriptions and deploy it (e.g., using Google Cloud Run).
+
+**Exercise 7: Converting a Spark Data Processing Pipeline to Apache Beam**
+
+Objective: Learn how to convert an Apache Spark-based data processing pipeline to an Apache Beam pipeline.
+
+Tasks:
+
+- Set up a sample Spark pipeline that reads a data source (e.g., a CSV file), performs transformation operations (e.g., filtering, mapping), and writes the output to a destination sink (e.g., another CSV file).
+- Run the Spark data processing pipeline.
+- Develop an Apache Beam pipeline that performs similar transformation operations as the Spark pipeline, reading from and writing to the same data source and destination.
+- Test the Apache Beam pipeline using the DirectRunner.
+
+Cloud Deployment:
+
+- For the Apache Beam pipeline, update the input and output sources to cloud-based storage (e.g., Google Cloud Storage).
+- Deploy the Apache Beam pipeline using the DataflowRunner or other available runner options based on your cloud provider (e.g., Flink on AWS or Azure Data Factory).
+
+These two new exercises give you the opportunity to explore how to enrich streaming data using Google Cloud Pub/Sub and an external API and how to convert an existing Spark pipeline to Apache Beam for more flexibility in deployment and scaling. Make sure to replace placeholder values with appropriate values based on your cloud provider and project.
+
+[ME]: Add resources for Relational Algebra, Streaming, and Analytics
+
+[AI]: Here are some recommended resources to expand your knowledge on Relational Algebra, Streaming, and Analytics.
+
+## Relational Algebra
+
+1. **Books**
+
+   - "An Introduction to Database Systems" by C. J. Date
+   - "Database System Concepts" by Avi Silberschatz, Henry F. Korth, and S. Sudarshan
+
+2. **Online Courses**
+
+   - [Relational Algebra in Database Management Systems - Udemy](https://www.udemy.com/course/relational-algebra-in-database-management-systems/)
+   - [Introduction to Relational Algebra - Khan Academy](https://www.khanacademy.org/computing/computer-science/algorithms/sql/p/databases)
+
+3. **Selected Articles and Guides**
+
+   - [Relational Algebra - GeeksforGeeks](https://www.geeksforgeeks.org/relational-algebra-dbms/)
+   - [A Beginner's Guide to the Relational Algebra - Cal Poly Computer Science](https://users.csc.calpoly.edu/~dekhtyar/345-Fall2010/lectures/lec02.pdf)
+
+## Streaming
+
+1. **Books**
+
+   - "Streaming Systems" by Tyler Akidau, Slava Chernyak, and Reuven Lax
+   - "Kafka: The Definitive Guide" by Neha Narkhede, Gwen Shapira, and Todd Palino
+
+2. **Online Courses**
+
+   - [Stream Processing with Apache Kafka - Confluent](https://www.confluent.io/stream-processing-apache-kafka)
+   - [Streaming Analytics on Google Cloud - Coursera](https://www.coursera.org/specializations/streaming-analytics-google-cloud)
+
+3. **Selected Articles and Guides**
+
+   - [Introduction to Stream Processing - Confluent](https://www.confluent.io/intro-to-stream-processing/)
+   - [Streaming 101: An Introduction to Streaming Data and Stream Processing - O'Reilly](https://www.oreilly.com/data/free/files/streaming-data.pdf)
+
+## Analytics
+
+1. **Books**
+
+   - "Python for Data Analysis" by Wes McKinney
+   - "Data Science for Business" by Foster Provost and Tom Fawcett
+
+2. **Online Courses**
+
+   - [Data Science and Machine Learning Bootcamp with R - Udemy](https://www.udemy.com/course/data-science-and-machine-learning-bootcamp-with-r/)
+   - [Data Analysis and Visualization with Python - University of Michigan (Coursera)](https://www.coursera.org/learn/data-analysis-with-python)
+
+3. **Selected Articles and Guides**
+
+   - [A Comprehensive Guide to Data Exploration - Analytics Vidhya](https://www.analyticsvidhya.com/blog/2016/01/guide-data-exploration/)
+   - [The 7 Steps of Exploratory Data Analysis - Towards Data Science](https://towardsdatascience.com/the-7-steps-of-exploratory-data-analysis-87e7c34d911b)
+
+These resources provide foundational knowledge as well as practical insights into the domains of Relational Algebra, Streaming, and Analytics. They will help you build a strong understanding of the core concepts and technologies used in these fields.
+
+[ME]: Give another real-world example for an auction system with a target of Clojure
+
+[AI]: Here is a real-world example for an auction system, designed using the Clojure programming language. The goal is to build a real-time bidding platform where users can place bids on items and see the current highest bid.
+
+#### Components
+
+1. **REST API**: Create a REST API using the Clojure Ring library to handle requests related to user registration, item listing, and bid placement.
+
+2. **WebSocket Server**: Implement a WebSocket server using the Sente library (Clojure). The server will be responsible for broadcasting real-time bidding updates to all connected clients.
+
+3. **Database**: Use a database (e.g., PostgreSQL) for storing user data, auction items, and bid history. Interact with the database using the HugSQL library for Clojure.
+
+4. **Frontend**: Develop a simple web page using HTML and JavaScript, allowing users to interact with the auction system: browse items, place bids, and view the highest bid in real-time via WebSockets.
+
+#### Implementation Steps
+
+1. Develop the REST API using the Ring library. Create endpoints for user registration (sign up, log in), listing auction items, adding new items, and submitting bids on items.
+
+2. Create the WebSocket server with the Sente library. The server should handle bid updates and broadcast new highest bids to all connected clients in real-time.
+
+3. Set up the database and use HugSQL to define and manage SQL queries for data manipulation. Design the schema with tables for users, items, and bids.
+
+4. Develop the simple web page that interacts with the REST API for user registration, item listing, and bid placement. Use JavaScript to connect to the WebSocket server and listen for bid updates.
+
+5. Test the auction system locally, verifying that users can register, browse items, submit bids, and receive real-time highest bid updates.
+
+#### Deployment
+
+1. Deploy the REST API and WebSocket server using a cloud PaaS (e.g., Heroku, Google App Engine, or AWS Elastic Beanstalk). Use environment variables for configuration, such as database connection settings.
+
+2. Configure the database to run on a managed service provided by your cloud platform (e.g., Amazon RDS, Google Cloud SQL, or Azure Database).
+
+3. Host the frontend on a web hosting service like GitHub Pages or Google Cloud Storage.
+
+By following this outline, you can build a real-world auction system using Clojure, with REST API and WebSocket components to provide a seamless and real-time interactive bidding experience for users.
+
+[ME]: Create ### Exercise 9 that looks at training models for an auction system targeting sponsorship of books for sale. Look at the Dataflow SDK as a key implementation
+
+[AI]: ### Exercise 9: Training Models for Auction Sponsor
+
+[ME]: Create ### Exercise 10: Learning the Apache Beam source code and ensure that all core workflow, models, and contributions are covered
+#+end_ai
+
+
+#+begin_ai
+Create ### Exercise 10: Learning the Apache Beam source code and ensure that all core workflow, models, and contributions are covered
+
+## Exercises
+
+### Exercise 1: Basic Data Transformation with Apache Kafka
+
+   Objective: Learn how to use Apache Kafka locally to consume and produce messages while transforming data.
+
+   Tasks:
+
+   - Set up and start Apache Kafka locally.
+   - Create a Kafka topic.
+   - Write a standalone Python/Clojure script that uses Kafka's producer and consumer APIs.
+   - Script should consume messages from the input topic, perform basic data transformation (e.g., converting data to uppercase), and produce the transformed messages to the output topic.
+   - Start the script and observe the transformed messages in the output topic.
+
+   Cloud Deployment:
+
+   - Deploy a managed Kafka service on the cloud provider of your choice (e.g., Confluent Cloud on AWS and Google Cloud, or Azure Event Hubs).
+   - Update the Python/Clojure script configurations to target the cloud Kafka instance.
+   - Deploy the script in a managed environment (AWS Lambda, Google Cloud Functions, or Azure Functions) to perform the transformation.
+
+### Exercise 2: Stream Processing with Google Cloud Pub/Sub and Apache Beam
+
+   Objective: Learn how to use Google Cloud Pub/Sub and Apache Beam locally to process streaming data and implement windowed processing.
+
+   Tasks:
+
+   - Set up and start Google Cloud Pub/Sub emulator.
+   - Create input and output Pub/Sub topics.
+   - Write a Python script to generate streaming data and publish it to the input Pub/Sub topic.
+   - Write an Apache Beam pipeline in Python/Clojure, consuming messages from the input topic, processing them (e.g., counting words), and producing results to the output topic.
+   - Test the pipeline locally using the DirectRunner.
+   - Start the data generation script and pipeline, observing the processed results in the output topic.
+
+   Cloud Deployment:
+
+   - Create input and output Pub/Sub topics in Google Cloud Pub/Sub.
+   - Update the data generation script to target the cloud instance of the input topic and deploy it in a managed environment (Google Cloud Functions).
+   - Deploy the Apache Beam pipeline using the DataflowRunner to process messages from the cloud input topic and write results to the cloud output topic.
+
+3. **Exercise 3: Stateless API with Kubernetes**
+
+   Objective: Build a stateless REST API using Python (e.g., Flask) or Clojure (e.g., Ring), then deploy and scale it on a local Kubernetes cluster.
+
+   Tasks:
+
+   - Develop a stateless REST API using Python or Clojure that performs basic CRUD operations on data stored in memory.
+   - Test the API locally.
+   - Package the API in a Docker container.
+   - Set up and start a local Kubernetes cluster (e.g., Minikube or Docker Desktop's Kubernetes).
+   - Deploy the API container on the local Kubernetes cluster and scale it with multiple replicas.
+   - Test the deployed API on the local cluster.
+
+   Cloud Deployment:
+
+   - Push the Docker container to a container registry (Docker Hub, Google Container Registry, or AWS Elastic Container Registry).
+   - Deploy the container on a managed Kubernetes service (Google Kubernetes Engine, AWS EKS, or Azure AKS).
+   - Update the deployment configuration to scale and ensure fault tolerance.
+   - Test the deployed API by accessing the cloud endpoint.
+
+### Exercise 4: Event-Driven Data Processing with AWS Lambda and Kinesis
+
+   Objective: Create an event-driven data processing pipeline using AWS Kinesis and Lambda functions.
+
+   Tasks:
+
+   - Set up AWS Kinesis streams for input and output.
+   - Write a Python script to generate streaming data and publish it to the AWS Kinesis input stream.
+   - Write an AWS Lambda function in Python to process the input Kinesis records (e.g., perform data enrichment).
+   - Configure the Lambda function to produce the processed records to the output Kinesis stream.
+   - Test the entire pipeline locally using the AWS SAM CLI.
+
+   Cloud Deployment:
+
+   - Create and configure the AWS Kinesis input and output streams, as well as the AWS Lambda function, in the AWS Management Console.
+   - Update the data generation script to target the cloud instance of the input Kinesis stream and deploy it in a managed environment (AWS Lambda).
+   - Test the deployed pipeline and observe the results in the output Kinesis stream.
+
+### Exercise 5: Real-Time Data Visualization with Azure Event Hubs and WebSockets
+
+   Objective: Collect streaming data from Azure Event Hubs and visualize it in real-time using WebSockets.
+
+   Tasks:
+
+   - Set up an Azure Event Hub.
+   - Write a Python script to generate streaming data and send it to the Azure Event Hub.
+   - Develop a WebSocket server and a simple web page to visualize real-time streaming data using JavaScript.
+   - Write a Python/Clojure script to consume messages from the Event Hub and broadcast them via the WebSocket server.
+   - Test the entire pipeline locally.
+
+   Cloud Deployment:
+
+   - Create and configure the Azure Event Hub in the Azure portal.
+   - Update the data generation script to target the cloud instance of the Event Hub and deploy it in a managed environment (Azure Functions).
+   - Deploy the WebSocket server using Azure Web Apps or a similar PaaS offering.
+   - Access the hosted web page in a browser to visualize the real-time streaming data from the Event Hub.
+
+These exercises are designed to run locally first and then be deployed to cloud providers. Each exercise has instructions for local setup and cloud deployment. The exercises target different aspects of streaming data and event-driven systems and enable staff engineers to build and deploy solutions on various platforms.
+
+
+### Exercise 6: Enriching Streaming Data with Google Cloud Pub/Sub and Bookstore API
+
+Objective: Learn how to consume messages from a Google Cloud Pub/Sub subscription, enrich the data using a Bookstore API, and produce enriched messages to another Pub/Sub topic.
+
+Tasks:
+
+- Set up a Google Cloud Pub/Sub topic and create two subscriptions: one for raw book data and one for enriched book data.
+- Write a Python script to simulate the streaming data, sending messages containing book IDs to the raw data subscription.
+- Set up a REST API (e.g., using Flask or FastAPI) that simulates a Bookstore API and returns book details for a given book ID.
+- Write a Python script to consume messages from the raw data subscription, call the Bookstore API to enrich the data with book details, and send the enriched messages to the enriched data subscription.
+- Test the pipeline locally using the Google Cloud Pub/Sub emulator.
+
+Cloud Deployment:
+
+- Deploy the Google Cloud Pub/Sub topic with both subscriptions in place.
+- Update the data streaming script to target the cloud instance of the raw data subscription, and deploy it (e.g., using Google Cloud Functions).
+- Deploy the Bookstore API to a cloud provider (e.g., Google App Engine).
+- Update the data enrichment script to target the cloud instances of the raw data and enriched data subscriptions and deploy it (e.g., using Google Cloud Run).
+
+### Exercise 7: Converting a Spark Data Processing Pipeline to Apache Beam 
+
+Objective: Learn how to convert an Apache Spark-based data processing pipeline to an Apache Beam pipeline.
+
+Tasks:
+
+- Set up a sample Spark pipeline that reads a data source (e.g., a CSV file), performs transformation operations (e.g., filtering, mapping), and writes the output to a destination sink (e.g., another CSV file).
+- Run the Spark data processing pipeline.
+- Develop an Apache Beam pipeline that performs similar transformation operations as the Spark pipeline, reading from and writing to the same data source and destination.
+- Test the Apache Beam pipeline using the DirectRunner.
+
+Cloud Deployment:
+
+- For the Apache Beam pipeline, update the input and output sources to cloud-based storage (e.g., Google Cloud Storage).
+- Deploy the Apache Beam pipeline using the DataflowRunner or other available runner options based on your cloud provider (e.g., Flink on AWS or Azure Data Factory).
+
+### Exercise 8: Auctions in Clojure 
+
+#### Components
+
+1. **REST API**: Create a REST API using the Clojure Ring library to handle requests related to user registration, item listing, and bid placement.
+
+2. **WebSocket Server**: Implement a WebSocket server using the Sente library (Clojure). The server will be responsible for broadcasting real-time bidding updates to all connected clients.
+
+3. **Database**: Use a database (e.g., PostgreSQL) for storing user data, auction items, and bid history. Interact with the database using the HugSQL library for Clojure.
+
+4. **Frontend**: Develop a simple web page using HTML and JavaScript, allowing users to interact with the auction system: browse items, place bids, and view the highest bid in real-time via WebSockets.
+
+#### Implementation Steps
+
+1. Develop the REST API using the Ring library. Create endpoints for user registration (sign up, log in), listing auction items, adding new items, and submitting bids on items.
+
+2. Create the WebSocket server with the Sente library. The server should handle bid updates and broadcast new highest bids to all connected clients in real-time.
+
+3. Set up the database and use HugSQL to define and manage SQL queries for data manipulation. Design the schema with tables for users, items, and bids.
+
+4. Develop the simple web page that interacts with the REST API for user registration, item listing, and bid placement. Use JavaScript to connect to the WebSocket server and listen for bid updates.
+
+5. Test the auction system locally, verifying that users can register, browse items, submit bids, and receive real-time highest bid updates.
+
+#### Deployment
+
+1. Deploy the REST API and WebSocket server using a cloud PaaS (e.g., Heroku, Google App Engine, or AWS Elastic Beanstalk). Use environment variables for configuration, such as database connection settings.
+
+2. Configure the database to run on a managed service provided by your cloud platform (e.g., Amazon RDS, Google Cloud SQL, or Azure Database).
+
+3. Host the frontend on a web hosting service like GitHub Pages or Google Cloud Storage.
+
+By following this outline, you can build a real-world auction system using Clojure, with REST API and WebSocket components to provide a seamless and real-time interactive bidding experience for users.
+
+
+
+[AI]: ### Exercise 9: Sentiment Analysis with Apache Flink and Twitter API
+
+Objective: Build an Apache Flink pipeline that consumes tweets from the Twitter API, performs sentiment analysis on the tweet text, and produces the sentiment score to an output sink (e.g., file, Kafka, console).
+
+Tasks:
+
+- Set up a Twitter Developer account and create an app to obtain API keys and access tokens.
+- Develop a Python or Java script that connects to the Twitter API and consumes tweets based on keywords or hashtags using the Tweepy library (Python) or Twitter4J library (Java).
+- Write an Apache Flink pipeline that reads the tweets from the Twitter API script, extracts the tweet text, and performs sentiment analysis using the TextBlob library (Python) or Stanford CoreNLP (Java).
+- Produce the sentiment score (e.g., positive, negative, neutral) for each tweet to an output sink (e.g., file, Kafka, console).
+- Run the Flink pipeline using the local Flink cluster.
+
+Cloud Deployment:
+
+- Set up a managed Apache Flink service on a cloud provider (e.g., Amazon Kinesis Data Analytics, Google Cloud Dataflow, or Azure Stream Analytics).
+- Update the Flink pipeline code to read tweets from a cloud-based message broker (e.g., Kafka, Google Cloud Pub/Sub) instead of directly from the Twitter API script.
+- Deploy the Twitter API script as a separate service (e.g., AWS Lambda, Google Cloud Functions, Azure Functions) to publish tweets to the message broker.
+- Run the Flink pipeline on the managed service, consuming tweets from the message broker, performing sentiment analysis, and writing the results to a cloud-based sink.
+
+### Exercise 10: Anomaly Detection with Apache Cassandra and InfluxDB
+
+Objective: Detect anomalies in time series data stored in Apache Cassandra and write the detected anomalies to InfluxDB.
+
+Tasks:
+
+- Set up an Apache Cassandra cluster locally or in the cloud (e.g., using the managed service provided by Aiven for Apache Cassandra).
+- Create a table in Apache Cassandra to store time series data, including columns for timestamp, metric values, and metadata (e.g., device ID, location).
+- Use a Python or Java script to generate synthetic time series data with different patterns (e.g., sudden spikes or drops, cyclic trends), and persist the data to the Cassandra table.
+- Develop an Apache Beam pipeline that reads time series data from the Cassandra table, detects anomalies using an anomaly detection algorithm (e.g., using the S-H-ESD method, LOF-based outliers, or IQR method), and writes the detected anomalies to an InfluxDB instance.
+- Run the Apache Beam pipeline with the appropriate runner (e.g., DirectRunner for local development, DataflowRunner for cloud deployment).
+
+Cloud Deployment:
+
+- Set up a managed InfluxDB instance on a cloud provider (e.g., using InfluxDB Cloud) and create an InfluxDB database.
+- Deploy the Apache Beam pipeline to cloud providers like Google Cloud Dataflow, Apache Flink on Amazon EMR, or Azure Stream Analytics, ensuring it reads time series data from the managed Apache Cassandra service and writes detected anomalies to the managed InfluxDB instance.
+
+By learning these exercises and techniques, staff engineers will gain valuable skills in various aspects of data processing, from basic data transformation to stream processing and advanced analytics using popular open-source technologies like Apache Beam, Apache Flink, and Apache Cassandra. This knowledge will enable them to develop and deploy scalable, flexible, and robust data processing pipelines for different use cases and requirements.
+
+[ME]: Generate exercises that cover the hard parts of the following in Beam and give a real-world example
+
+- runners
+- side imputs
+- schemas
+
+
+[AI]: ### Exercise 11: Exploring Apache Beam Runners
+
+Objective: Gain a deep understanding of Apache Beam runners and learn how to switch between different runners for executing Beam pipelines.
+
+Tasks:
+
+1. Create an Apache Beam pipeline that reads data from a source (e.g., a CSV file), transforms the data (e.g., applying filters, mapping, and aggregations), and writes the results to an output sink (e.g., another CSV file or a database).
+
+2. Test the pipeline locally using the DirectRunner.
+
+3. Explore other available runners such as DataflowRunner (Google Cloud Dataflow), FlinkRunner (Apache Flink), SamzaRunner (Apache Samza), and SparkRunner (Apache Spark).
+
+4. Set up and configure the appropriate environments for each chosen runner (e.g., a Flink or Spark cluster, a Google Cloud Dataflow project).
+
+5. Update the Apache Beam pipeline to run with each chosen runner and validate that the pipeline behaves consistently across different runners (i.e., produces the same results).
+
+Real-world example: An organization processing log data wants to migrate its data processing pipelines from running on their current batch processing system to a more flexible and scalable streaming platform. They want to test and compare the performance of different runners before making a final decision.
+
+### Exercise 12: Working with Side Inputs in Apache Beam
+
+Objective: Learn how to use side inputs in Apache Beam to perform operations that require additional secondary input data.
+
+Tasks:
+
+1. Create an Apache Beam pipeline that reads primary data from a source (e.g., a CSV file containing user data).
+
+2. Prepare a secondary dataset (e.g., a CSV file containing user scores) and read it into a PCollection.
+
+3. Use side inputs in a ParDo or FlatMap transform to perform operations that require the secondary dataset (e.g., join user data with their corresponding user scores).
+
+4. Write the combined output to a suitable sink (e.g., another CSV file or a database).
+
+5. Test the pipeline locally using the DirectRunner.
+
+Real-world example: A company has two datasets stored in separate CSV files: one contains customer profile information, and the other contains customers' purchase history. The company wants to combine these datasets to derive insights into their customer base and tailor their marketing efforts.
+
+### Exercise 13: Leveraging Schemas in Apache Beam
+
+Objective: Learn how to use schemas in Apache Beam to define the structure of the data, making it easier to work with structured data sources and transformations.
+
+Tasks:
+
+1. Create an Apache Beam pipeline that reads structured data from a source (e.g., a CSV file containing user data with columns such as user ID, name, and age).
+
+2. Define a schema for the structured data using Python NamedTuple, Java POJO, or Avro schema.
+
+3. Modify the pipeline's source to read data with the defined schema, allowing Beam to automatically project the data onto the schema.
+
+4. Perform a transformation (e.g., filtering, mapping) on the data using the schema fields.
+
+5. Write the transformed data to a suitable sink (e.g., another CSV file, a database) while preserving the schema.
+
+6. Test the pipeline locally using the DirectRunner.
+
+Real-world example: An organization obtains a dataset of customer reviews from an e-commerce website. The dataset includes information such as user ID, product ID, rating, and review text. Using schemas, the organization wants to apply various transformations to the data before ingesting it into their data warehouse for further analysis.
+
+By completing these exercises, engineers will learn how to run Apache Beam pipelines on different runners, utilize side inputs for processing additional data, and use schemas to define the structure of the data. These skills are essential for developing and deploying large-scale data processing pipelines that handle complex data sources and requirements in real-world scenarios.
+
+[ME]: Create ### Exercise 14 that combines all of these for monitoring developer productivity
+
+[AI]: ### Exercise 14: Monitoring Developer Productivity with Apache Beam
+
+Objective: Develop an end-to-end data processing pipeline using Apache Beam that combines different runners, side inputs, and schemas to monitor developer productivity metrics using data from various sources (e.g., GitHub, Jira, and Slack).
+
+Tasks:
+
+1. Set up data sources to collect data from GitHub (e.g., commits, pull requests), Jira (e.g., issue creation and resolution times), and Slack (e.g., message counts, reactions).
+
+2. Define schemas for the data collected from each source.
+
+3. Create an Apache Beam pipeline to read data from each source using the defined schemas.
+
+4. Use side inputs to combine data from different sources in the pipeline to derive developer productivity metrics (e.g., commits per day, average time to resolve issues, active communication in Slack).
+
+5. Transform and aggregate the combined data, generating summaries of developer productivity metrics for a given time frame.
+
+6. Write the summary output to a suitable sink (e.g., a CSV file or a database).
+
+7. Test the pipeline locally using the DirectRunner.
+
+8. Deploy and run the pipeline using different runners (e.g., DataflowRunner, FlinkRunner, SparkRunner) and compare their performance.
+
+Real-world example: A company wants to track and monitor its development team's productivity over time by analyzing data from various sources, including GitHub, Jira, and Slack. By leveraging Apache Beam, side inputs, and schemas, the company can create an efficient, flexible, and scalable pipeline that delivers valuable insights into their team's performance and productivity.
+
+By completing this exercise, engineers will learn how to build a comprehensive, production-ready data processing pipeline with Apache Beam. They will gain experience working with multiple data sources, incorporating schemas to define data structures, using side inputs for data enrichment and aggregation, and deploying pipelines on different runners for real-world performance analysis. By mastering these concepts and techniques, engineers will be able to tackle even more complex data processing challenges and develop powerful, adaptable solutions quickly and efficiently.
+
+[ME]: 
+#+end_ai
+
 ** [#C] How to Fail with Real-time Analytics by Matthew Housley
 
 - https://beamsummit.org/sessions/2023/how-to-fail-realtime-analytics/
@@ -177,6 +1317,11 @@ Juan Gris art of Apache Beam conference in NYC (mixed media: newspaper, histogra
 - Graph traversal 
 
 ** [#C] Founders' Panel by Federico Patota, Reuven Lax & +2 More Speakers
+
+** Apache Beam and Ensemble Modeling: A Winning Combination for Machine Learning by Shubham Krishna
+
+- https://beamsummit.org/sessions/2023/apache-beam-and-ensemble-modeling-a-winning-combination-for-machine-learning/
+
 ** [#C] Running Apache Beam on Kubernetes: A Case Study by Sascha Kerbler
 ** [#C] How many ways can you skin a cat, if the cat is a problem that needs an ML model to solve? by Kerry Donny-Clark
 

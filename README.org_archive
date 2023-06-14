@@ -1,0 +1,39 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /Users/jasonwalsh/sandbox/beam-summit-nyc-2023/README.org
+
+
+* K8S, Flink, 
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-06-14 Wed 09:08
+:ARCHIVE_FILE: ~/sandbox/beam-summit-nyc-2023/README.org
+:ARCHIVE_OLPATH: Session Notes
+:ARCHIVE_CATEGORY: README
+:END:
+
+
+
+- AWS 
+- GCP
+- Kubernetes
+- Apache Beam 
+- Python 
+
+Focus on the following workflow: 
+
+- Setup 
+- Onboarding 
+- Local development 
+- Test support 
+- Infrastructure
+- Operational support
+- Debugging
+- Cloud deployment (Terraform)
+
+
+#+begin_ai
+Create a dep.sh script invoked through Make that install core local development tools for 
+#+end_ai
+
+
